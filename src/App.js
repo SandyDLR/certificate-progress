@@ -26,7 +26,15 @@ const CertificateProgress = () => {
 
   // Load Transifex Live script on component mount
   useEffect(() => {
-    window.liveSettings = { api_key: "e63f68545928438f89e2ecc80453d76a" };
+    window.liveSettings = {
+      api_key: "e63f68545928438f89e2ecc80453d76a",
+      variables_parser: function (text, fn) {
+        // Detect numbers and wrap them as variables for translation
+        return text.replace(/\b\d+\b/g, function (match) {
+          return fn(match);
+        });
+      },
+    };
 
     const script = document.createElement("script");
     script.src = "//cdn.transifex.com/live.js";
@@ -44,10 +52,12 @@ const CertificateProgress = () => {
     <div className="container">
       <div
         aria-label={`${certificate.name}, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
-        tx-attrs="aria-label"  // ✅ Mark aria-label for translation
+        tx-attrs="aria-label" // ✅ Mark aria-label for translation
         className="progress-box"
       >
-        {certificate.completedCount} / {certificate.totalCount}
+        {certificate.name},{" "}
+        <var>{certificate.completedCount}</var> out of{" "}
+        <var>{certificate.totalCount}</var> steps completed
       </div>
       <div className="buttons">
         <button onClick={decreaseProgress} disabled={certificate.completedCount === 0}>
