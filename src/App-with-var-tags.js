@@ -29,7 +29,7 @@ const CertificateProgress = () => {
     window.liveSettings = {
       api_key: "e63f68545928438f89e2ecc80453d76a",
       variables_parser: function (text, fn) {
-        // Detect numbers and replace them with variables for translation
+        // Detect numbers and wrap them as variables for translation
         return text.replace(/\b\d+\b/g, function (match) {
           return fn(match);
         });
@@ -51,7 +51,9 @@ const CertificateProgress = () => {
   return (
     <div className="container">
       <div
-        aria-label={`${certificate.name}, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
+        aria-label={`${
+          certificate.name
+        }, <var>${certificate.completedCount}</var> out of <var>${certificate.totalCount}</var> steps completed`}
         tx-attrs="aria-label" // ✅ Mark aria-label for translation
         className="progress-box"
       >
@@ -70,3 +72,4 @@ const CertificateProgress = () => {
 };
 
 export default CertificateProgress;
+
