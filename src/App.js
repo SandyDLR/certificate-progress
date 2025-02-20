@@ -23,41 +23,39 @@ const CertificateProgress = () => {
     }));
   };
 
+  // Dynamically generate Transifex Live-friendly aria-label
+  const getAriaLabel = () => {
+    return `React Fundamentals, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`;
+  };
+
   // Load Transifex Live script on component mount
   useEffect(() => {
     window.liveSettings = {
       api_key: "e63f68545928438f89e2ecc80453d76a",
       variables_parser: function (text, fn) {
-        let firstNumber = null;
-  
         return text.replace(/\b\d+\b/g, function (match) {
-          if (firstNumber === null) {
-            firstNumber = fn(match); // First detected number becomes {{0}}
-            return firstNumber;
-          }
-          return firstNumber; // Reuse the same variable for second occurrence
+          return fn(match); // Convert numbers into variables for Transifex Live
         });
       },
     };
-  
+
     const script = document.createElement("script");
     script.src = "//cdn.transifex.com/live.js";
     script.type = "text/javascript";
     script.async = true;
     document.body.appendChild(script);
-  
+
     return () => {
       // Cleanup (optional)
       document.body.removeChild(script);
     };
   }, []);
-  
 
   return (
     <div className="container">
       <div
-        aria-label={`React Fundamentals, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
-        tx-attrs="aria-label" // ✅ Mark aria-label for translation
+        aria-label={getAriaLabel()} // Dynamically update aria-label
+        tx-attrs="aria-label" // ✅ Ensure Transifex Live processes aria-label
         className="progress-box"
       >
         <span aria-hidden="true">{certificate.completedCount} / {certificate.totalCount}</span>
