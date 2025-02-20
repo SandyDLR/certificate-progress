@@ -51,13 +51,13 @@ const CertificateProgress = () => {
   return (
     <div className="container">
       <div
-        aria-label={`${certificate.name}, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
+        aria-label={`${
+          certificate.name
+        }, <var>${certificate.completedCount}</var> out of <var>${certificate.totalCount}</var> steps completed`}
         tx-attrs="aria-label" // ✅ Mark aria-label for translation
         className="progress-box"
       >
-        {certificate.name},{" "}
-        <var>{certificate.completedCount}</var> out of{" "}
-        <var>{certificate.totalCount}</var> steps completed
+        <span aria-hidden="true">{certificate.completedCount} / {certificate.totalCount}</span>
       </div>
       <div className="buttons">
         <button onClick={decreaseProgress} disabled={certificate.completedCount === 0}>
@@ -72,3 +72,4 @@ const CertificateProgress = () => {
 };
 
 export default CertificateProgress;
+
