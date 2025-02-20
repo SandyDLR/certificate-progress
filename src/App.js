@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css"; // Optional for styling
 
 const CertificateProgress = () => {
@@ -23,6 +23,22 @@ const CertificateProgress = () => {
       completedCount: Math.max(prev.completedCount - 1, 0),
     }));
   };
+
+  // Load Transifex Live script on component mount
+  useEffect(() => {
+    window.liveSettings = { api_key: "e63f68545928438f89e2ecc80453d76a" };
+
+    const script = document.createElement("script");
+    script.src = "//cdn.transifex.com/live.js";
+    script.type = "text/javascript";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup (optional)
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div className="container">
