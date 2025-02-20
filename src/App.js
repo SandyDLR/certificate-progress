@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css"; // Optional for styling
 
-function App() {
+const CertificateProgress = () => {
+  const [certificate, setCertificate] = useState({
+    name: "React Fundamentals",
+    completedCount: 2,
+    totalCount: 5,
+  });
+
+  // Function to increase completed count
+  const increaseProgress = () => {
+    setCertificate((prev) => ({
+      ...prev,
+      completedCount: Math.min(prev.completedCount + 1, prev.totalCount),
+    }));
+  };
+
+  // Function to decrease completed count
+  const decreaseProgress = () => {
+    setCertificate((prev) => ({
+      ...prev,
+      completedCount: Math.max(prev.completedCount - 1, 0),
+    }));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div
+        aria-label={`${certificate.name}, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
+        className="progress-box"
+      >
+        {certificate.completedCount} / {certificate.totalCount}
+      </div>
+      <div className="buttons">
+        <button onClick={decreaseProgress} disabled={certificate.completedCount === 0}>
+          Previous Step
+        </button>
+        <button onClick={increaseProgress} disabled={certificate.completedCount === certificate.totalCount}>
+          Next Step
+        </button>
+      </div>
     </div>
   );
-}
+};
 
-export default App;
+export default CertificateProgress;

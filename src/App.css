@@ -36,3 +36,49 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.progress-box {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 20px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.progress-box {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 20px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+.buttons button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+}
+
+.buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
