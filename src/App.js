@@ -3,8 +3,7 @@ import "./App.css"; // Optional for styling
 
 const CertificateProgress = () => {
   const [certificate, setCertificate] = useState({
-    name: "React Fundamentals",
-    completedCount: 2,
+    completedCount: 1,
     totalCount: 5,
   });
 
@@ -29,29 +28,35 @@ const CertificateProgress = () => {
     window.liveSettings = {
       api_key: "e63f68545928438f89e2ecc80453d76a",
       variables_parser: function (text, fn) {
-        // Detect numbers and replace them with variables for translation
+        let firstNumber = null;
+  
         return text.replace(/\b\d+\b/g, function (match) {
-          return fn(match);
+          if (firstNumber === null) {
+            firstNumber = fn(match); // First detected number becomes {{0}}
+            return firstNumber;
+          }
+          return firstNumber; // Reuse the same variable for second occurrence
         });
       },
     };
-
+  
     const script = document.createElement("script");
     script.src = "//cdn.transifex.com/live.js";
     script.type = "text/javascript";
     script.async = true;
     document.body.appendChild(script);
-
+  
     return () => {
       // Cleanup (optional)
       document.body.removeChild(script);
     };
   }, []);
+  
 
   return (
     <div className="container">
       <div
-        aria-label={`${certificate.name}, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
+        aria-label={`React Fundamentals, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
         tx-attrs="aria-label" // ✅ Mark aria-label for translation
         className="progress-box"
       >
