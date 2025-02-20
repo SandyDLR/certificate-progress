@@ -44,6 +44,7 @@ const CertificateProgress = () => {
     <div className="container">
       <div
         aria-label={`${certificate.name}, ${certificate.completedCount} out of ${certificate.totalCount} steps completed`}
+        tx-attrs="aria-label"  // ✅ Mark aria-label for translation
         className="progress-box"
       >
         {certificate.completedCount} / {certificate.totalCount}
